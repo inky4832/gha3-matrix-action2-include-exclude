@@ -7,10 +7,12 @@ jobs:
       matrix:  
         os: [ubuntu-latest, windows-latest]  
         version: [18, 20]  
+        include:  
+          - os: ubuntu-latest  
+            version: 19  
         exclude:  
-          - os: windows-latest  
-            version: 18  
-
+          - os: ubuntu-latest  
+            version: 18
     continue-on-error: true
     runs-on: ${{ matrix.os }}  
     steps:  
