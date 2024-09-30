@@ -2,14 +2,15 @@ name: Matrix workflow
 on: push
 jobs:
   test:
+    continue-on-error: true
     strategy:	
       matrix:
-         os: [ubuntu-latest , windows-latest]
+         os: [ubuntu-latest, windows-latest]
          version: [18, 20]
 	 include:
 	   - os: ubuntu-latest
-	     version: 18
-    continue-on-error: true
+	     version: 19
+    
     runs-on: ${{matrix.os}}
     steps:
       - name: Checkout
@@ -23,4 +24,28 @@ jobs:
       - name: Run Test
         run:  echo Run Test
 
- 
+name: Matrix workflow  
+on: push  
+jobs:  
+  test:  
+    continue-on-error: true  
+    strategy:	  
+      matrix:  
+        os: [ubuntu-latest, windows-latest]  
+        version: [18, 20]  
+        exclude:  
+          - os: windows-latest  
+            version: 18  
+
+    runs-on: ${{ matrix.os }}  
+    steps:  
+      - name: Checkout  
+        uses: actions/checkout@v4  
+      - name: Set up Node.js  
+        uses: actions/setup-node@v4  
+        with:  
+          node-version: ${{ matrix.version }}  
+      - name: Install dependencies  
+        run: npm install axios  
+      - name: Run Test  
+        run: echo Run Test
