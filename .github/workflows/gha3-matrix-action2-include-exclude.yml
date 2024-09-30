@@ -2,13 +2,14 @@ name: Matrix workflow
 on: push
 jobs:
   test:
+    continue-on-error: true
     strategy:	
       matrix:
          os: [ubuntu-latest , windows-latest]
          version: [18, 20]
-	 exclude:
+         exclude:
 	   - version: 18
-    continue-on-error: true
+
     runs-on: ${{matrix.os}}
     steps:
       - name: Checkout
